@@ -1,5 +1,5 @@
 dashboard_import:
-  package_import_url: github://MariuszWoszczynski/wmbus-reader-eth/wmbus-reader-eth-poe.yaml@main
+  package_import_url: github://MariuszWoszczynski/wmbus-reader-eth-poe/wmbus-reader-eth-poe.yaml@main
   import_full_config: true
 
 substitutions:
