@@ -12,7 +12,6 @@ esphome:
   project:
     name: esphome.wmbus_reader_eth_poe
     version: "1.0"
-#  compile_process_limit: 1    # only for RPI 
 
 esp32:
   board: esp32-poe
