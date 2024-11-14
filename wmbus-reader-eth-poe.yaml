@@ -31,7 +31,8 @@ time:
 
 # Enable logging
 logger:
-
+  level: debug
+  
 # Enable Home Assistant API
 api:
   encryption:
