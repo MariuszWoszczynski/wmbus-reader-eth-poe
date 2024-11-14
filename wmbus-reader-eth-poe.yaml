@@ -3,19 +3,19 @@ dashboard_import:
   import_full_config: true
 
 substitutions:
-  name: "wmbus-reader-eth"
+  name: "wmbus-reader-eth-poe"
   friendly_name: "WMBUS Reader ETH POE"
 
 esphome:
   name: "${name}"
   friendly_name: "${friendly_name}"
   project:
-    name: esphome.wmbus_reader_eth
+    name: esphome.wmbus_reader_eth_poe
     version: "1.0"
 #  compile_process_limit: 1    # only for RPI 
 
 esp32:
-  board: wt32-eth01
+  board: esp32-poe
   framework:
     type: arduino
 
@@ -46,6 +46,7 @@ mdns:
   
 web_server: 
   port: 80
+  version: 3
 
 ethernet:  
   type: LAN8720
