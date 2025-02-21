@@ -20,7 +20,7 @@ esp32:
 
 
 external_components:
-  - source: github://SzczepanLeon/esphome-components@3.2.3
+  - source: github://SzczepanLeon/esphome-components@version_3
     components: [ wmbus ]
     refresh: 0d
     
@@ -68,7 +68,7 @@ wmbus:
   gdo2_pin: GPIO13
   gdo0_pin: GPIO16
   cs_pin:   GPIO05
-  log_unknown: true
+#  log_unknown: true
 
 
 sensor:   
