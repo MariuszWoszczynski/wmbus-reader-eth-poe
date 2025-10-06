@@ -35,6 +35,7 @@ time:
 
 # Enable logging
 logger:
+  level: info 
 
 # Enable Home Assistant API
 api:
