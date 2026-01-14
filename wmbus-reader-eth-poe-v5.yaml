@@ -25,18 +25,14 @@ esp32:
 #####  Therefore, it is advisable to follow the information on the site of the author of the software:
 #####  https://github.com/SzczepanLeon/esphome-components
 
+
 external_components:
   - source: github://SzczepanLeon/esphome-components@main
-
-
-#If you are using esphome 2025.12.0, use this external_components configuration: 
-#external_components:
-#  - source: github://SzczepanLeon/esphome-components@main
-#    components:
-#      - socket_transmitter
-#      - wmbus_common
-#      - wmbus_radio
-#      - wmbus_meter
+    components:
+      - socket_transmitter
+      - wmbus_common
+      - wmbus_radio
+      - wmbus_meter
 
 
 time:
