@@ -62,29 +62,41 @@ ethernet:
     pin: GPIO17
     mode: CLK_OUT
   phy_addr: 0
-  power_pin: GPIO12
-#Optional manual IP
-#  manual_ip:
-#    static_ip: 192.168.10.99
-#    gateway: 192.168.10.1
-#    subnet: 255.255.255.0
+  power_pin:
+    number: GPIO12
+    ignore_strapping_warning: true
+  #Optional manual IP
+  #manual_ip:
+  #  static_ip: 192.168.17.30
+  #  gateway: 192.168.17.1
+  #  subnet: 255.255.255.0
 
+button:
+  - platform: restart
+    name: "ESP32 Restart"
+    id: esp32_rest
 
 spi:
   clk_pin:  GPIO14
-  mosi_pin: GPIO02
-  miso_pin: GPIO15
+  mosi_pin:
+    number: GPIO02
+    ignore_strapping_warning: true
+  miso_pin:
+    number: GPIO15
+    ignore_strapping_warning: true
   
 wmbus_radio:
   radio_type: SX1276
-  cs_pin:   GPIO05  
+  cs_pin:
+    number: GPIO05
+    ignore_strapping_warning: true
   reset_pin: GPIO16 
   irq_pin: GPIO13
   on_frame:
     - then:
-        - logger.log:
-            format: "RSSI: %ddBm T: %s (%d)"
-            args: [ frame->rssi(), frame->as_hex().c_str(), frame->data().size() ]
+      - logger.log:
+          format: "RSSI: %ddBm T: %s (%d)"
+          args: [ frame->rssi(), frame->as_hex().c_str(), frame->data().size() ]
 ##############################################################################################################################################################################
 ##############################################################################################################################################################################
 # The following sensors are examples, for IZAR, APATOR, UNISMART, Heat and Electricity meters. Leave only the configuration of such meters you have, delete the other sensors. 
