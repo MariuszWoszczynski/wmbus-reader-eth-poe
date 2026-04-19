@@ -68,10 +68,6 @@ ethernet:
   #  gateway: 192.168.17.1
   #  subnet: 255.255.255.0
 
-button:
-  - platform: restart
-    name: "ESP32 Restart"
-    id: esp32_rest
 
 spi:
   clk_pin:  GPIO14
