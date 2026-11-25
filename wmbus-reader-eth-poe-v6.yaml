@@ -1,0 +1,133 @@
+dashboard_import:
+  package_import_url: github://MariuszWoszczynski/wmbus-reader-eth-poe/wmbus-reader-eth-poe-v6.yaml@main
+  import_full_config: true
+
+substitutions:
+  name: "wmbus-reader-eth-poe-v6"
+  friendly_name: "WMBUS Reader ETH POE v6"
+
+esphome:
+  name: "${name}"
+  friendly_name: "${friendly_name}"
+  project:
+    name: esphome.wmbus_reader_eth
+    version: "1.0"
+
+esp32:
+  board: esp32-poe
+  framework:
+    type: esp-idf
+
+api:
+  encryption:
+    key: "+MsNLRCt5/2rGRNyQ1BtU0tTtJsOd9EbMzdB6HV29AE="
+
+
+external_components:
+  - source:
+      type: git
+      url: https://github.com/IoTLabs-pl/esphome-components
+#  - source: github://SzczepanLeon/esphome-components@main
+#    components:
+#      - socket_transmitter
+#      - wmbus_common
+#      - wmbus_radio
+#      - wmbus_meter
+
+time:
+ - platform: sntp
+   id: time_sntp
+
+# Enable logging
+logger:
+  level: DEBUG
+
+ota:
+  - platform: esphome
+
+mdns:
+  disabled: false
+
+web_server: 
+  port: 80
+  version: 3
+
+ethernet:
+  type: LAN8720
+  mdc_pin: GPIO23
+  mdio_pin: GPIO18
+  clk:
+    pin: GPIO17
+    mode: CLK_OUT
+  phy_addr: 0
+  power_pin:
+    number: GPIO12
+    ignore_strapping_warning: true
+  #Optional manual IP
+  #manual_ip:
+  #  static_ip: 192.168.17.30
+  #  gateway: 192.168.17.1
+  #  subnet: 255.255.255.0
+
+button:
+  - platform: restart
+    name: "ESP32 Restart"
+    id: esp32_rest
+
+spi:
+  clk_pin:  GPIO14
+  mosi_pin:
+    number: GPIO02
+    ignore_strapping_warning: true
+  miso_pin:
+    number: GPIO15
+    ignore_strapping_warning: true
+
+wmbus_radio:
+  radio_type: SX1262
+  cs_pin: GPIO05
+  reset_pin: GPIO16  
+  dio1_pin: GPIO36 
+  busy_pin: GPIO13
+  tcxo_voltage: 1.8V
+  rf_switch: true
+  on_frame:
+    - then:
+      - logger.log:
+          format: "RSSI: %ddBm T: %s (%d)"
+          args: [ frame->rssi(), frame->as_hex().c_str(), frame->data().size() ]
+          
+
+##############################################################################################################################################################################
+##############################################################################################################################################################################
+# The following sensors are examples, for IZAR, APATOR, UNISMART, Heat and Electricity meters. Leave only the configuration of such meters you have, delete the other sensors. 
+# If you have another meter, check its configuration on:  https://github.com/SzczepanLeon/esphome-components and https://github.com/IoTLabs-pl/esphome-components
+##############################################################################################################################################################################
+##############################################################################################################################################################################
+
+############################# Define counters here (typ, ID, key, mode...) ###############################
+wmbus_meter:
+  - id: water_meter_apator
+    meter_id: "07616180"  ######## enter your APATOR meter ID here ###########
+    type: apator162
+    key: "00000000000000000000000000000000"
+
+
+########################### Define sensors here #####################################
+sensor:
+   
+  - platform: wmbus_meter
+    parent_id: water_meter_apator #Water meter Apator
+    field: total_m3
+    device_class: water
+    name: Apator water meter - state
+    accuracy_decimals: 2
+    state_class: total_increasing
+    unit_of_measurement: "m³"
+  - platform: wmbus_meter
+    parent_id: water_meter_apator
+    field: rssi_dbm
+    name: Apator water meter - RSSI
+    unit_of_measurement: "dBm"
+    state_class: measurement
+  
